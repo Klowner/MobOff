@@ -4,9 +4,12 @@ import glob
 import os
 import subprocess
 import json
+import sys
 
 import click
 
+def read_user_input():
+    return input() if sys.version_info > (3, 0) else raw_input()
 
 @click.group()
 def cli():
@@ -128,7 +131,7 @@ def initialise():
     click.secho(
         "Please enter your API Key, you can obtain it from here: https://www.pushbullet.com/#settings/account",
         bold=True)
-    api_key = input()
+    api_key = read_user_input()
 
     try:
         pb = Pushbullet(api_key)
@@ -146,7 +149,7 @@ def initialise():
         print("{0} : {1}".format(i + 1, device))
         i += 1
 
-    device_id = int(input()) - 1
+    device_id = int(read_user_input()) - 1
 
     if not os.path.exists('Music'):
         os.makedirs('Music')
